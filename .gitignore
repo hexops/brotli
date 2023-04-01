@@ -18,3 +18,7 @@ __pycache__/
 *.txt.uncompressed
 *.br
 *.unbr
+
+# Zig
+zig-cache/
+zig-out/
