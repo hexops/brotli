@@ -14,7 +14,9 @@ pub fn build(b: *std.Build) void {
     lib.addIncludePath("c/include");
     lib.addCSourceFiles(&sources, &.{});
 
-    switch (target.os_tag orelse @import("builtin").target.os.tag) {
+    const target_info = (std.zig.system.NativeTargetInfo.detect(target) catch unreachable).target;
+
+    switch (target_info.os.tag) {
         .linux => lib.defineCMacro("OS_LINUX", "1"),
         .freebsd => lib.defineCMacro("OS_FREEBSD", "1"),
         .macos => lib.defineCMacro("OS_MACOSX", "1"),
