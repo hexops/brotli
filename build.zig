@@ -23,7 +23,7 @@ pub fn build(b: *std.Build) void {
         else => {},
     }
 
-    _ = b.addInstallArtifact(lib);
+    b.installArtifact(lib);
 }
 
 const sources = [_][]const u8{
