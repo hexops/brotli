@@ -1,22 +1,21 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
-    const target = b.standardTargetOptions(.{});
+    const cross_target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
     const lib = b.addStaticLibrary(.{
         .name = "brotli",
-        .target = target,
+        .target = cross_target,
         .optimize = optimize,
     });
 
     lib.linkLibC();
-    lib.addIncludePath("c/include");
+    lib.addIncludePath(.{ .path = "c/include" });
     lib.addCSourceFiles(&sources, &.{});
 
-    const target_info = (std.zig.system.NativeTargetInfo.detect(target) catch unreachable).target;
-
-    switch (target_info.os.tag) {
+    const target = cross_target.toTarget();
+    switch (target.os.tag) {
         .linux => lib.defineCMacro("OS_LINUX", "1"),
         .freebsd => lib.defineCMacro("OS_FREEBSD", "1"),
         .macos => lib.defineCMacro("OS_MACOSX", "1"),
