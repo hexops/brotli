@@ -1,0 +1,10 @@
+.{
+    .name = "brotli",
+    .version = "0.0.0",
+    .paths = .{
+        "c/",
+        "LICENSE",
+        "build.zig",
+        "build.zig.zon",
+    },
+}
