@@ -12,7 +12,7 @@ pub fn build(b: *std.Build) void {
 
     lib.linkLibC();
     lib.addIncludePath(.{ .path = "c/include" });
-    lib.addCSourceFiles(&sources, &.{});
+    lib.addCSourceFiles(.{ .files = &sources });
     lib.installHeadersDirectory("c/include/brotli", "brotli");
 
     const target = cross_target.toTarget();
