@@ -1,12 +1,12 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
-    const cross_target = b.standardTargetOptions(.{});
+    const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
     const lib = b.addStaticLibrary(.{
         .name = "brotli",
-        .target = cross_target,
+        .target = target,
         .optimize = optimize,
     });
 
@@ -15,8 +15,7 @@ pub fn build(b: *std.Build) void {
     lib.addCSourceFiles(.{ .files = &sources, .flags = &.{} });
     lib.installHeadersDirectory("c/include/brotli", "brotli");
 
-    const target = cross_target.toTarget();
-    switch (target.os.tag) {
+    switch (target.result.os.tag) {
         .linux => lib.defineCMacro("OS_LINUX", "1"),
         .freebsd => lib.defineCMacro("OS_FREEBSD", "1"),
         .macos => lib.defineCMacro("OS_MACOSX", "1"),
