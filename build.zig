@@ -11,9 +11,9 @@ pub fn build(b: *std.Build) void {
     });
 
     lib.linkLibC();
-    lib.addIncludePath(.{ .path = "c/include" });
+    lib.addIncludePath(b.path("c/include"));
     lib.addCSourceFiles(.{ .files = &sources, .flags = &.{} });
-    lib.installHeadersDirectory("c/include/brotli", "brotli");
+    lib.installHeadersDirectory(b.path("c/include/brotli"), "brotli", .{});
 
     switch (target.result.os.tag) {
         .linux => lib.defineCMacro("OS_LINUX", "1"),
