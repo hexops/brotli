@@ -20,5 +20,5 @@ __pycache__/
 *.unbr
 
 # Zig
-zig-cache/
+.zig-cache/
 zig-out/
